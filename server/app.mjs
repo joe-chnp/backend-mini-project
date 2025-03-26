@@ -2,6 +2,7 @@ import express from "express";
 import bookRouter from "./routes/books.mjs";
 import authRouter from "./routes/auth.mjs";
 import dotenv from "dotenv";
+import cors from "cors";
 
 async function init() {
     dotenv.config();
@@ -9,6 +10,7 @@ async function init() {
     const app = express();
     const port = 4000;
 
+    app.use(cors());
     app.use(express.json());
     app.use("/books", bookRouter);
     app.use("/auth", authRouter);
