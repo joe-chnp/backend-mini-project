@@ -1,8 +1,11 @@
 import { Router } from "express";
 import connectionPool from "../utils/db.mjs";
 import { validateBookData } from "../middlewares/book.validation.mjs";
+import { protect } from "../middlewares/protect.mjs";
 
 const bookRouter = Router();
+
+bookRouter.use(protect);
 
 bookRouter.post("/", [validateBookData], async (req, res) => {
     const newBook = {
@@ -25,6 +28,11 @@ bookRouter.post("/", [validateBookData], async (req, res) => {
                 newBook.published_at,
             ]
         );
+
+        return res.status(200).json({
+            message: "Added book successfully"
+        });
+        
     } catch (error) {
         console.error("Error adding book to database:", error)
         return res.status(500).json({
@@ -32,10 +40,6 @@ bookRouter.post("/", [validateBookData], async (req, res) => {
             error: error.message,
         });
     };
-    
-    return res.status(200).json({
-        message: "Added book successfully"
-    });
 });
 
 bookRouter.get("/", async (req, res) => {
@@ -44,6 +48,12 @@ bookRouter.get("/", async (req, res) => {
 
     try {
         results = await connectionPool.query(`select * from books where user_id = $1;`, [userId]);
+
+        return res.status(200).json({
+            message: "Books retrieved successfully.",
+            data: results.rows
+        });
+
     } catch (error) {
         console.error("Error getting book from database:", error)
         return res.status(500).json({
@@ -51,11 +61,6 @@ bookRouter.get("/", async (req, res) => {
             error: error.message,
         });
     };
-    
-    return res.status(200).json({
-        message: "Books retrieved successfully.",
-        data: results.rows
-    });
 });
 
 bookRouter.put("/:bookId", [validateBookData], async (req, res) => {
@@ -85,6 +90,11 @@ bookRouter.put("/:bookId", [validateBookData], async (req, res) => {
                 updatedBook.category,
             ]
         );
+
+        return res.status(200).json({
+            message: "Updated book successfully.",
+        });
+
     } catch (error) {
         console.error("Error updating book from database:", error)
         return res.status(500).json({
@@ -92,10 +102,6 @@ bookRouter.put("/:bookId", [validateBookData], async (req, res) => {
             error: error.message,
         });
     };
-    
-    return res.status(200).json({
-        message: "Updated book successfully.",
-    });
 });
 
 bookRouter.delete("/:bookId", async (req, res) => {
@@ -109,7 +115,12 @@ bookRouter.delete("/:bookId", async (req, res) => {
     }
 
     try {
-        await connectionPool.query(`delete from books where book_id = $1`, [bookIdFromClient])
+        await connectionPool.query(`delete from books where book_id = $1`, [bookIdFromClient]);
+
+        return res.status(200).json({
+            message: "Deleted book successfully.",
+        });
+
     } catch (error) {
         console.error("Error deleting book from database:", error)
         return res.status(500).json({
@@ -117,11 +128,6 @@ bookRouter.delete("/:bookId", async (req, res) => {
             error: error.message,
         });
     };
-    
-    return res.status(200).json({
-        message: "Deleted book successfully.",
-    });
-    
 });
 
 export default bookRouter;
