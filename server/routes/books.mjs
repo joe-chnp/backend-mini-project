@@ -5,7 +5,7 @@ import { protect } from "../middlewares/protect.mjs";
 
 const bookRouter = Router();
 
-bookRouter.use(protect);
+// bookRouter.use(protect);
 
 bookRouter.post("/", [validateBookData], async (req, res) => {
     const newBook = {
@@ -58,6 +58,27 @@ bookRouter.get("/", async (req, res) => {
         console.error("Error getting book from database:", error)
         return res.status(500).json({
             message: "Server could not get books due to a database issue.",
+            error: error.message,
+        });
+    };
+});
+
+bookRouter.get("/:bookId", async (req, res) => {
+    let results;
+    const bookId = req.params.bookId;
+
+    try {
+        results = await connectionPool.query(`select * from books where book_id = $1;`, [bookId]);
+
+        return res.status(200).json({
+            message: "Books retrieved successfully.",
+            data: results.rows
+        });
+
+    } catch (error) {
+        console.error("Error getting book from database:", error)
+        return res.status(500).json({
+            message: "Server could not get book due to a database issue.",
             error: error.message,
         });
     };
