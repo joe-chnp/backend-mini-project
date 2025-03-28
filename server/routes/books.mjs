@@ -5,9 +5,10 @@ import { protect } from "../middlewares/protect.mjs";
 
 const bookRouter = Router();
 
-// bookRouter.use(protect);
+bookRouter.use(protect);
 
 bookRouter.post("/", [validateBookData], async (req, res) => {
+    const userId = req.query.userId;
     const newBook = {
         ...req.body,
         created_at: new Date(),
@@ -19,7 +20,7 @@ bookRouter.post("/", [validateBookData], async (req, res) => {
             `insert into books (user_id, title, author, category, created_at, updated_at, published_at)
             values ($1, $2, $3, $4, $5, $6, $7)`,
             [
-                2,
+                userId,
                 newBook.title,
                 newBook.author,
                 newBook.category,

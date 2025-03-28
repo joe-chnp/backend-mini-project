@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useAuth } from "../contexts/authentication"; 
 
 function SignupPage() {
   const [username, setUsername] = useState("");
@@ -6,9 +7,22 @@ function SignupPage() {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
 
+  const { register } = useAuth();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const data = {
+      username,
+      password,
+      firstname,
+      lastname,
+    };
+    register(data);
+  };
+
   return (
     <div>
-      <form>
+      <form onSubmit={handleSubmit}>
         <h1>Sign up</h1>
         <div>
           <label for="username">

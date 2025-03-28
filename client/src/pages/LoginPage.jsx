@@ -1,13 +1,23 @@
 import { useState } from "react";
+import { useAuth } from "../contexts/authentication";
 
 function LoginPage() {
-  console.log('login');
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const { login } = useAuth();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    login({
+      username,
+      password,
+    });
+  };
+
   return (
     <div>
-      <form>
+      <form onSubmit={handleSubmit}>
         <h1>Log in</h1>
         <div>
           <label for="username">
