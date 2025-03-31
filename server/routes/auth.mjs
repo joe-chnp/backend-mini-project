@@ -6,6 +6,95 @@ import jwt from "jsonwebtoken";
 
 const authRouter = Router();
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Auth:
+ *       type: object
+ *       required:
+ *         - username
+ *         - password
+ *         - firstname
+ *         - lastname
+ *       properties:
+ *         username:
+ *           type: string
+ *           description: username
+ *         password:
+ *           type: string
+ *           description: password
+ *         firstname:
+ *           type: string
+ *           description: first name
+ *         lastname:
+ *           type: string
+ *           description: last name
+ *       example:
+ *         username: admin01
+ *         password: admin01
+ *         firstname: admin01's first name
+ *         lastname: admin01's last name
+ 
+ *     reqBodyAuth:
+ *       type: object
+ *       required:
+ *         - username
+ *         - password
+ *       properties:
+ *         username:
+ *           type: string
+ *           description: username
+ *         password:
+ *           type: string
+ *           description: password
+ *       example:
+ *         username: admin01
+ *         password: admin01
+ */
+
+/**
+ * @swagger
+ * tags:
+ *   name: Authentication
+ *   description: The Authentication API
+ * /auth/register:
+ *   post:
+ *     summary: Registration
+ *     tags: [Authentication]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Auth'
+ *     responses:
+ *       200:
+ *         description: Registration successful
+ *       400:
+ *         description: Username already exists. Please choose a different one.
+ *       500:
+ *         description: Server could not register due to a database issue.
+ * 
+ * /auth/login:
+ *   post:
+ *     summary: log in
+ *     tags: [Authentication]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/reqBodyAuth'
+ *     responses:
+ *       200:
+ *         description: Login successfully
+ *       401:
+ *         description: Password is incorrect
+ *       404:
+ *         description: User not found
+ */
+
 authRouter.post("/register", [validateUserData], async (req, res) => {
     const user = {
         ...req.body,

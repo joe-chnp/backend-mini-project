@@ -7,6 +7,188 @@ const bookRouter = Router();
 
 bookRouter.use(protect);
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Book:
+ *       type: object
+ *       required:
+ *         - title
+ *         - author
+ *         - category
+ *       properties:
+ *         book_id:
+ *           type: integer
+ *           description: The auto-generated id of the book
+ *         title:
+ *           type: string
+ *           description: The title of your book
+ *         author:
+ *           type: string
+ *           description: The book author
+ *         category:
+ *           type: string
+ *           description: The category of your book
+ *         user_id:
+ *           type: integer
+ *           description: The id of user who posted the book
+ *         created_at:
+ *           type: string
+ *           format: date
+ *           description: The date the book was added
+ *         updated_at:
+ *           type: string
+ *           format: date
+ *           description: The date the book was updated
+ *         published_at:
+ *           type: string
+ *           format: date
+ *           description: The date the book was published
+ *       example:
+ *         id: 24
+ *         title: To Kill a Mockingbird
+ *         author: Harper Lee
+ *         category: Fiction, Classic
+ *         user_id: 4
+ *         created_at: 2025-03-28 11:37:28.822
+ *         updated_at:  2025-03-28 11:37:28.822
+ *         published_at:    2025-03-28 11:37:28.822
+ 
+ *     reqBodyBook:
+ *       type: object
+ *       required:
+ *         - title
+ *         - author
+ *         - category
+ *       properties:
+ *         title:
+ *           type: string
+ *           description: The title of your book
+ *         author:
+ *           type: string
+ *           description: The book author
+ *         category:
+ *           type: string
+ *           description: The category of your book
+ *       example:
+ *         title: To Kill a Mockingbird
+ *         author: Harper Lee
+ *         category: Fiction, Classic
+ */
+
+/**
+ * @swagger
+ * tags:
+ *   name: Books
+ *   description: The books managing API
+ * /books:
+ *   post:
+ *     summary: Add a new book
+ *     tags: [Books]
+ *     parameters:
+ *       - in: query
+ *         name: userId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The user id
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/reqBodyBook'
+ *     responses:
+ *       200:
+ *         description: Added book successfully
+ *       500:
+ *         description: Server could not add book due to a database issue.
+ *   get:
+ *     summary: Lists all user's books
+ *     tags: [Books]
+ *     parameters:
+ *       - in: query
+ *         name: userId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The user id
+ *     responses:
+ *       200:
+ *         description: Books retrieved successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                  $ref: '#/components/schemas/Book'
+ *       500:
+ *         description: Server could not get books due to a database issue.
+ * 
+ * /books/{bookId}:
+ *   get:
+ *     summary: Get the book by id
+ *     tags: [Books]
+ *     parameters:
+ *       - in: path
+ *         name: bookId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The book id
+ *     responses:
+ *       200:
+ *         description: Books retrieved successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                  $ref: '#/components/schemas/Book'
+ *       500:
+ *         description: Server could not get book due to a database issue.
+ *   put:
+ *    summary: Update the book by the id
+ *    tags: [Books]
+ *    parameters:
+ *      - in: path
+ *        name: bookId
+ *        schema:
+ *          type: string
+ *        required: true
+ *        description: The book id
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            $ref: '#/components/schemas/reqBodyBook'
+ *    responses:
+ *      200:
+ *        description: Updated book successfully.
+ *      404:
+ *        description: Server could not find a requested book to update.
+ *      500:
+ *        description: Server could not update book due to a database issue.
+ *   delete:
+ *     summary: Delete the book by the id
+ *     tags: [Books]
+ *     parameters:
+ *       - in: path
+ *         name: bookId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The book id
+ *     responses:
+ *       200:
+ *         description: Deleted book successfully.
+ *       404:
+ *         description: Server could not find a requested book to delete
+ *       500:
+ *         description: Server could not delete book due to a database issue.
+ */
 bookRouter.post("/", [validateBookData], async (req, res) => {
     const userId = req.query.userId;
     const newBook = {
