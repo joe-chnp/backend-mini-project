@@ -18,9 +18,9 @@ export const validateBookData = (req, res, next) => {
         })
     }
 
-    if (category.length > 20) {
+    if (category.length > 50) {
         return res.status(400).json({
-            message: "Category cannot be longer than 20 characters."
+            message: "Category cannot be longer than 50 characters."
         })
     }
 

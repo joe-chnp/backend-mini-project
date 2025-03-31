@@ -14,13 +14,17 @@ h3 {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  width: 50vw;
+  width: 60vw;
   margin-top: 10px;
   .book-info {
-    width: 30%;
+    width: 60%;
     .info {
       margin: 0;
-      width: fit-content;
+      text-align: left;
+      margin-left: 20px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 }
@@ -34,7 +38,8 @@ h3 {
 
 .logout:hover {
   background: red;
-  color: white
+  border-color: red;
+  color: #f9f9f9;
 }
 
 .form {
@@ -53,4 +58,28 @@ input {
   border-width: 1px;
   border-radius: 5px;
   padding: 4px;
+}
+
+img {
+  width: 70px;
+}
+
+.pagination {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+@media (max-width: 900px) {
+  .book {
+    .book-info {
+      h2 {
+        font-size: 16px;
+      }
+      h3 {
+        font-size: 12px;
+      }
+    }
+  }
 }

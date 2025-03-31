@@ -50,7 +50,13 @@ button:hover {
 }
 button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  /* outline: 4px auto -webkit-focus-ring-color; */
+  background-color: #213547;
+  color: #f9f9f9;
+}
+
+button:disabled {
+  color: lightgrey
 }
 
 @media (prefers-color-scheme: light) {

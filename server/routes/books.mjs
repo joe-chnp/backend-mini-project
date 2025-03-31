@@ -46,13 +46,25 @@ bookRouter.post("/", [validateBookData], async (req, res) => {
 bookRouter.get("/", async (req, res) => {
     let results;
     const userId = req.query.userId;
+    const page = parseInt(req.query.page, 10) || 1;
 
+    const PAGE_SIZE = 5;
+    const skip = PAGE_SIZE * (page - 1);
     try {
-        results = await connectionPool.query(`select * from books where user_id = $1;`, [userId]);
+        results = await connectionPool
+        .query(`select * from books where user_id = $1 offset $2 limit $3 ;`, [userId, skip, PAGE_SIZE]);
 
+        const countResult = await connectionPool.query(
+            `select count(*) from books where user_id = $1;`,
+            [userId]
+        );
+        const count = parseInt(countResult.rows[0].count, 10);
+        const totalPages = Math.ceil(count / PAGE_SIZE);
+        
         return res.status(200).json({
             message: "Books retrieved successfully.",
-            data: results.rows
+            data: results.rows,
+            total_pages: totalPages,
         });
 
     } catch (error) {

@@ -2,35 +2,32 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useBooks from '../hooks/useBooks';
 import { useAuth } from '../contexts/authentication';
-import { jwtDecode } from 'jwt-decode';
 
 function HomePage({ auth }) {
   const navigate = useNavigate();
-  const { books, getBooks, deleteBook } = useBooks();
-  const { state, setState, logout } = useAuth();
+  const { books, getBooks, deleteBook, totalPages } = useBooks();
+  const { state, logout } = useAuth();
+  const [userId, setUserId] = useState(state?.user?.userId)
+  const [page, setPage] = useState(1);
+  const pages = [...Array(totalPages)].map((_, i) => i + 1);
 
   const handleMyBooks = () => {
-    getBooks();
+    setUserId(state?.user?.userId)
+    getBooks({ userId, page});
   }
   
   useEffect(() => {
-    const token = localStorage.token;
-    if (token) {
-      const userDataFromToken = jwtDecode(token);
-      setState({ ...state, user:userDataFromToken });
-    }
-    getBooks();
-  }, []);
+    getBooks({ userId, page});
+  }, [userId, page]);
 
   return (
     <div>
       <div>
         <h1>My Bookshelf</h1>
-        {/* <input type='text' placeholder='search'/> */}
         {
           auth
           ? <>
-            <div style={{width: '50vw', display: 'flex', justifyContent: 'space-between'}}>
+            <div style={{width: '60vw', display: 'flex', justifyContent: 'space-between'}}>
               <div className='button-container'>
                 <button onClick={handleMyBooks}>My Books</button>
                 <button onClick={() => navigate("/book/add")}>Add</button>
@@ -54,7 +51,9 @@ function HomePage({ auth }) {
         {books.map((book) => {
           return (
           <div className='book'>
-            <div style={{width: '90px', height: '125px', background: 'red'}}/>
+            <div style={{width: '80px', height: '100px', display: 'flex', alignItems: 'center', background: 'lightgrey', borderRadius: '5px'}}>
+              <img src='/book.png'/>
+            </div>
             <div className='book-info'>
               <h2 className='info'>{book?.title}</h2>
               <h3 className='info'>{book?.author}</h3>
@@ -72,6 +71,20 @@ function HomePage({ auth }) {
           <h2>Please log in</h2>
         </>
       }
+
+      <div className="pagination">
+        <button disabled={page <= 1} onClick={() => setPage(page - 1)}>
+          Previous
+        </button>
+       
+        {pages.map((p) => (
+          <button style={p ===  page ? {background: '#213547', color: '#f9f9f9'} : {}} onClick={() => setPage(p)}>{p}</button>
+        ))}
+
+        <button disabled={page === totalPages} onClick={() => setPage(page + 1)}>
+          Next
+        </button>
+      </div>
       
     </div>
   )

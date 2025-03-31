@@ -2,19 +2,31 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/authentication";
+import { jwtDecode } from 'jwt-decode';
 
 function useBooks() {
   const navigate = useNavigate();
   const [books, setBooks] = useState([]);
   const [book, setBook] = useState(null);
-  const { state } = useAuth();
+  const [totalPages, setTotalPages] = useState(0);
+  const { state, setState } = useAuth();
 
-  const getBooks = async () => {
+  const getBooks = async (input) => {
+    const { userId, page } = input;
+    const token = localStorage.token;
+    if (token && !userId) {
+      const userDataFromToken = jwtDecode(token);
+      setState({ ...state, user:userDataFromToken });
+    }
     try {
+      const params = new URLSearchParams();
+      params.append("userId", userId);
+      params.append("page", page);
       const results = await axios.get(
-        `http://localhost:4000/books?userId=${state.user.userId}`
+        `http://localhost:4000/books?${params.toString()}`
       );
       setBooks(results.data.data);
+      setTotalPages(results.data.total_pages);
     } catch (error) {
       console.log(error, 'error')
     }
@@ -67,6 +79,7 @@ function useBooks() {
     deleteBook,
     addBook,
     editBookById,
+    totalPages,
   }
 }
 
