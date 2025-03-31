@@ -24,9 +24,8 @@ function AddBookPage() {
       <h1>Add new book</h1>
         <div>
           <form onSubmit={handleSubmit}>
-          <div>
-            <label>
-              Title
+            <div className="form">
+              <label for="title">Title</label>
               <input
                 id="title"
                 name="title"
@@ -37,11 +36,9 @@ function AddBookPage() {
                 }}
                 value={title}
               />
-            </label>
-          </div>
-          <div>
-            <label>
-              Author
+            </div>
+            <div className="form">
+              <label for="author">Author</label>
               <input
                 id="author"
                 name="author"
@@ -52,11 +49,9 @@ function AddBookPage() {
                 }}
                 value={author}
               />
-            </label>
-          </div>
-          <div>
-            <label>
-              Category
+            </div>
+            <div className="form">
+              <label for="category">Category</label>
               <input
                 id="category"
                 name="category"
@@ -67,21 +62,21 @@ function AddBookPage() {
                 }}
                 value={category}
               />
-            </label>
-          </div>
+            </div>
 
-          <div>
-            <button type="submit">Add</button>
-          </div>
+            <div className="button-container">
+              <button type="submit">Add</button>
+              <button
+                onClick={() => {
+                  navigate("/");
+                }}
+              >
+                Back to Home
+              </button>
+            </div>
           </form>
         </div>
-      <button
-        onClick={() => {
-          navigate("/");
-        }}
-      >
-        Back to Home
-      </button>
+      
     </div>
   );
 }

@@ -19,35 +19,31 @@ function LoginPage() {
     <div>
       <form onSubmit={handleSubmit}>
         <h1>Log in</h1>
-        <div>
-          <label for="username">
-            Username
-            <input
-              id="username"
-              name="username"
-              type="text"
-              placeholder="username"
-              onChange={(e) => {
-                setUsername(e.target.value);
-              }}
-              value={username}
-            />
-          </label>
+        <div className="form">
+          <label for="username">Username</label>
+          <input
+            id="username"
+            name="username"
+            type="text"
+            placeholder="Enter username here"
+            onChange={(e) => {
+              setUsername(e.target.value);
+            }}
+            value={username}
+          />
         </div>
-        <div>
-          <label for="password">
-            Password
-            <input
-              id="password"
-              name="password"
-              type="password"
-              placeholder="password"
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-              value={password}
-            />
-          </label>
+        <div className="form">
+          <label for="password">Password</label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            placeholder="Enter password here"
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+            value={password}
+          />
         </div>
 
         <div>

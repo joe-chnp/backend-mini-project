@@ -5,18 +5,52 @@
   text-align: center;
 }
 
+h3 {
+  margin: 0;
+}
+
 .book {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
+  width: 50vw;
+  margin-top: 10px;
   .book-info {
-    .title {
-      margin: 0;
-    }
+    width: 30%;
     .info {
       margin: 0;
       width: fit-content;
     }
   }
+}
+
+.button-container {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.logout:hover {
+  background: red;
+  color: white
+}
+
+.form {
+  display: flex;
+  justify-content: space-between;
+  width: 30vw;
+}
+
+form {
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+}
+
+input {
+  border-width: 1px;
+  border-radius: 5px;
+  padding: 4px;
 }

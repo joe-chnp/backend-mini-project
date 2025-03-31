@@ -39,64 +39,58 @@ function EditBookPage() {
       <h1>Edit book</h1>
         <div>
           <form onSubmit={handleSubmit}>
-          <div>
-            <label>
-              Title
-              <input
-                id="title"
-                name="title"
-                type="text"
-                placeholder="Enter title here"
-                onChange={(e) => {
-                  setTitle(e.target.value);
-                }}
-                value={title}
-              />
-            </label>
+          <div className="form">
+            <label>Title</label>
+            <input
+              id="title"
+              name="title"
+              type="text"
+              placeholder="Enter title here"
+              onChange={(e) => {
+                setTitle(e.target.value);
+              }}
+              value={title}
+            />
           </div>
-          <div>
-            <label>
-              Author
-              <input
-                id="author"
-                name="author"
-                type="text"
-                placeholder="Enter author here"
-                onChange={(e) => {
-                  setAuthor(e.target.value);
-                }}
-                value={author}
-              />
-            </label>
+          <div className="form">
+            <label>Author</label>
+            <input
+              id="author"
+              name="author"
+              type="text"
+              placeholder="Enter author here"
+              onChange={(e) => {
+                setAuthor(e.target.value);
+              }}
+              value={author}
+            />
           </div>
-          <div>
-            <label>
-              Category
-              <input
-                id="category"
-                name="category"
-                type="text"
-                placeholder="Enter category here"
-                onChange={(e) => {
-                  setCategory(e.target.value);
-                }}
-                value={category}
-              />
-            </label>
+          <div className="form">
+            <label>Category</label>
+            <input
+              id="category"
+              name="category"
+              type="text"
+              placeholder="Enter category here"
+              onChange={(e) => {
+                setCategory(e.target.value);
+              }}
+              value={category}
+            /> 
           </div>
 
-          <div>
+          <div className="button-container">
             <button type="submit">Update</button>
+            <button
+              onClick={() => {
+                navigate("/");
+              }}
+            >
+              Back to Home
+            </button>
           </div>
           </form>
         </div>
-      <button
-        onClick={() => {
-          navigate("/");
-        }}
-      >
-        Back to Home
-      </button>
     </div>
   );
 }

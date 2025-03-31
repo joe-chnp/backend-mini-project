@@ -30,15 +30,21 @@ function HomePage({ auth }) {
         {
           auth
           ? <>
-            <h3>{state?.user?.firstname}</h3>
-            <button onClick={() => logout()}>Log out</button>
-            <button onClick={handleMyBooks}>My Books</button>
-            <button onClick={() => navigate("/book/add")}>Add</button>
+            <div style={{width: '50vw', display: 'flex', justifyContent: 'space-between'}}>
+              <div className='button-container'>
+                <button onClick={handleMyBooks}>My Books</button>
+                <button onClick={() => navigate("/book/add")}>Add</button>
+              </div>
+              <div className='button-container'>
+                <h3>{state?.user?.firstname}</h3>
+                <button className='logout' onClick={() => logout()}>Log out</button>
+              </div>
+            </div>
           </>
-          : <>
+          : <div style={{display: 'flex', gap: '20px', justifyContent: 'center'}}>
             <button onClick={() => navigate("/login")}>Log in</button>
             <button onClick={() => navigate("/signup")}>Sign up</button>  
-          </>
+          </div>
         }
       </div>
       
@@ -48,14 +54,16 @@ function HomePage({ auth }) {
         {books.map((book) => {
           return (
           <div className='book'>
-            <div style={{width: '100px', height: '150px', background: 'red'}}/>
-              <div className='book-info'>
-                <h2 className='title'>{book?.title}</h2>
-                <h3 className='info'>{book?.author}</h3>
-                <h3 className='info'>{book?.category}</h3>
-              </div>
-            <button onClick={() => navigate(`/book/edit/${book.book_id}`)}>Edit</button>
-            <button onClick={() => deleteBook(book.book_id)}>Delete</button>
+            <div style={{width: '90px', height: '125px', background: 'red'}}/>
+            <div className='book-info'>
+              <h2 className='info'>{book?.title}</h2>
+              <h3 className='info'>{book?.author}</h3>
+              <h3 className='info'>{book?.category}</h3>
+            </div>
+            <div className='button-container'>
+              <button onClick={() => navigate(`/book/edit/${book.book_id}`)}>Edit</button>
+              <button onClick={() => deleteBook(book.book_id)}>Delete</button>
+            </div>
           </div>
           )
         })}

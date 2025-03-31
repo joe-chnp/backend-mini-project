@@ -24,65 +24,57 @@ function SignupPage() {
     <div>
       <form onSubmit={handleSubmit}>
         <h1>Sign up</h1>
-        <div>
-          <label for="username">
-            Username
-            <input
-              id="username"
-              name="username"
-              type="text"
-              placeholder="username"
-              onChange={(e) => {
-                setUsername(e.target.value);
-              }}
-              value={username}
-            />
-          </label>
+        <div className="form">
+          <label for="username">Username</label>
+          <input
+            id="username"
+            name="username"
+            type="text"
+            placeholder="Enter username here"
+            onChange={(e) => {
+              setUsername(e.target.value);
+            }}
+            value={username}
+          />
         </div>
-        <div>
-          <label for="password">
-            Password
-            <input
-              id="password"
-              name="password"
-              type="text"
-              placeholder="password"
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-              value={password}
-            />
-          </label>
+        <div className="form">
+          <label for="password">Password</label>
+          <input
+            id="password"
+            name="password"
+            type="text"
+            placeholder="Enter password here"
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+            value={password}
+          />
         </div>
-        <div>
-          <label for="firstname">
-            First name
-            <input
-              id="firstname"
-              name="firstname"
-              type="text"
-              placeholder="first name"
-              onChange={(e) => {
-                setFirstname(e.target.value);
-              }}
-              value={firstname}
-            />
-          </label>
+        <div className="form">
+          <label for="firstname">First name</label>
+          <input
+            id="firstname"
+            name="firstname"
+            type="text"
+            placeholder="Enter first name here"
+            onChange={(e) => {
+              setFirstname(e.target.value);
+            }}
+            value={firstname}
+          />
         </div>
-        <div>
-          <label for="lastname">
-            Last name
-            <input
-              id="lastname"
-              name="lastname"
-              type="text"
-              placeholder="last name"
-              onChange={(e) => {
-                setLastname(e.target.value);
-              }}
-              value={lastname}
-            />
-          </label>
+        <div className="form">
+          <label for="lastname">Last name</label>
+          <input
+            id="lastname"
+            name="lastname"
+            type="text"
+            placeholder="Enter last name here"
+            onChange={(e) => {
+              setLastname(e.target.value);
+            }}
+            value={lastname}
+          />
         </div>
 
         <div>
